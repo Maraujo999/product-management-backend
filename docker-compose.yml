@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - h2
+    restart: always
+
+  h2:
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521" # porta de conexão JDBC
+      - "81:81"     # console web
+    environment:
+      H2_OPTIONS: -ifNotExists
+    restart: always
