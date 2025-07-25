@@ -4,10 +4,11 @@ import com.visto.interfaces.dto.ProductRequestDTO;
 import com.visto.interfaces.dto.ProductResponseDTO;
 import com.visto.interfaces.mapper.ProductMapper;
 import com.visto.interfaces.response.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.visto.domain.model.Product;
 import com.visto.application.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.*;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -67,9 +68,9 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Exclui produto", description = "Remove permanentemente o produto com o ID fornecido.")
-    @ApiResponses({@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Produto excluído com sucesso"), @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Produto não encontrado"), @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Erro interno no servidor")})
-    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Produto excluído com sucesso"), @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Produto não encontrado"), @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Erro interno no servidor")})
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiResponse<>(null, "Produto excluído com sucesso", 204));
+        return ResponseEntity.noContent().build();
     }
 }
